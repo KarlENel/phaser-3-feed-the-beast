@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Shooter</title>
+    <style>
+      html,
+      body,
+      .container {
+        margin: 0px;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+      }
+      body {
+        background-image: url('assets/images/piiixl/bg.gif');
+        background-color: rgba(0, 0, 0, 0.5);
+        background-blend-mode: darken;
+      }
+      canvas {
+        border: 2px solid #b2405e;
+      }
+      .text-block {
+        position: absolute;
+        top: 50%;
+        left: 5%;
+        transform: translateY(-50%);
+        color: #b2405e;
+        font-size: 20px;
+        font-family: Arial, sans-serif;
+        text-align: left;
+      }
+    </style>
+    <script src="assets/js/phaser.min.js"></script>
+  </head>
+  <body>
+    <div class="text-block">
+      <p>FEED THE BEAST!</p>
+      <p>Obtain 20 points to win!</p>
+      <br />
+      <p>Use left and right arrow</p>
+      <p>keys to move.</p>
+      <br />
+      <p>Avoid the enemies!</p>
+    </div>
+    <div class="container" id="game-container"></div>
+    <script src="src/main.js" type="module"></script>
+  </body>
+</html>
