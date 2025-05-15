@@ -167,5 +167,14 @@ export class GameScene extends Phaser.Scene {
     new Lives(this, eventBusComponent);
 
     new AudioManager(this, eventBusComponent);
+
+    const graphics = this.add.graphics();
+    graphics.lineStyle(2, 0xffffff, 0.3);
+    const y = this.scale.height - this.scale.height / 3.5;
+    graphics.beginPath();
+    graphics.moveTo(0, y);
+    graphics.lineTo(this.scale.width, y);
+    graphics.strokePath();
+    graphics.closePath();
   }
 }

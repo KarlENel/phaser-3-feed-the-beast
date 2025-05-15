@@ -3,6 +3,7 @@ import { CUSTOM_EVENTS, EventBusComponent } from '../components/events/event-bus
 import { HealthComponent } from '../components/health/health-component.js';
 import { KeyboardInputComponent } from '../components/input/keyboard-input-component.js';
 import { HorizontalMovementComponent } from '../components/movement/horizontal-movement-component.js';
+import { VerticalMovementComponent } from '../components/movement/vertical-movement-component.js';
 import * as CONFIG from '../config.js';
 import { Score } from './ui/score.js';
 
@@ -14,6 +15,7 @@ export class Player extends Phaser.GameObjects.Container {
   #eventBusComponent;
   #shipSprite;
   #scoreComponent;
+  #verticalMovementComponent;
 
   constructor(scene, eventBusComponent) {
     super(scene, scene.scale.width / 2, scene.scale.height - 32, []);
@@ -32,6 +34,11 @@ export class Player extends Phaser.GameObjects.Container {
 
     this.#keyboardInputComponent = new KeyboardInputComponent(this.scene);
     this.#horizontalMovementComponent = new HorizontalMovementComponent(
+      this,
+      this.#keyboardInputComponent,
+      CONFIG.PLAYER_MOVEMENT_HORIZONTAL_VELOCITY
+    );
+    this.#verticalMovementComponent = new VerticalMovementComponent(
       this,
       this.#keyboardInputComponent,
       CONFIG.PLAYER_MOVEMENT_HORIZONTAL_VELOCITY
@@ -81,6 +88,12 @@ export class Player extends Phaser.GameObjects.Container {
 
     this.#keyboardInputComponent.update();
     this.#horizontalMovementComponent.update();
+    this.#verticalMovementComponent.update();
+
+    const minY = this.scene.scale.height - this.scene.scale.height / 4;
+    const maxY = this.scene.scale.height - 32;
+    if (this.y < minY) this.y = minY;
+    if (this.y > maxY) this.y = maxY;
   }
 
   #hide() {
@@ -96,5 +109,6 @@ export class Player extends Phaser.GameObjects.Container {
     this.#healthComponent.reset();
     this.setPosition(this.scene.scale.width / 2, this.scene.scale.height - 32);
     this.#keyboardInputComponent.lockInput = false;
+    if (this.#verticalMovementComponent) this.#verticalMovementComponent.reset();
   }
 }
